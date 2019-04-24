@@ -11,7 +11,7 @@
             </span>
         </div>
         <div class="todos">
-            <div @dblclick="onDblClick(todo)" v-for="todo in allTodos"
+            <div @dblclick.prevent="onDblClick(todo)" v-for="todo in allTodos"
                  :key="todo.id" v-bind:class="{'is-complete':todo.completed}"
                  class="todo">
                 {{todo.title}}
@@ -62,6 +62,7 @@ export default {
     padding: 1rem;
     border-radius: 15px 15px 3px;
     text-align: center;
+    user-select: none;
     position: relative;
     cursor: pointer;
 }
