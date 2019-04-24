@@ -40,6 +40,7 @@ const mutations = {
         localStorage.setItem('mystore', JSON.stringify(state.todos))
     },
     removeTodo: (state, id) => {
+            state.todos = JSON.parse(localStorage.getItem('mystore'));
             state.todos = state.todos.filter(todo => todo.id !== id);
             localStorage.setItem('mystore', JSON.stringify(state.todos))
     },
