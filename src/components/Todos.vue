@@ -15,7 +15,7 @@
                  :key="todo.id" v-bind:class="{'is-complete':todo.completed}"
                  class="todo">
                 {{todo.title}}
-                <i @click="deleteTodo(todo.id)" class="fas fa-trash-alt"></i>
+                <i @dblclick="deleteTodo(todo.id)" class="fas fa-trash-alt"></i>
             </div>
         </div>
     </div>
