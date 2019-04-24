@@ -1,5 +1,4 @@
 import uuidv1 from 'uuid/v1';
-import { stat } from 'fs';
 
 const state = {
     todos: [],
