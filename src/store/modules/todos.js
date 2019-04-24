@@ -50,8 +50,10 @@ const mutations = {
     updateTodo: (state, updatedTodo) => {
         const index = state.todos.findIndex(todo => todo.id === updatedTodo.id);
         if (index != -1) {
-            state.todos.splice(index, 1, updatedTodo)
-            localStorage.setItem('mystore', JSON.stringify(state.todos))
+            state.todos = JSON.parse(localStorage.getItem('mystore'));
+            state.todos.splice(index, 1, updatedTodo);
+            localStorage.setItem('mystore', JSON.stringify(state.todos));
+            state.todos = state.todos.slice(0, state.limit)
         }
     }
 }
