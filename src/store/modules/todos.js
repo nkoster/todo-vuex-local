@@ -37,6 +37,7 @@ const mutations = {
     setTodos: (state, todos) => (state.todos = todos),
     newTodo: (state, todo) => {
         state.todos = JSON.parse(localStorage.getItem('mystore'));
+        state.todos = state.todos ? state.todos : [];
         state.todos.unshift(todo);
         localStorage.setItem('mystore', JSON.stringify(state.todos));
         state.todos = state.todos.slice(0, state.limit)
