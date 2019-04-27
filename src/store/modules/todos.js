@@ -1,8 +1,12 @@
-import uuidv1 from 'uuid/v1';
+import uuidv1 from 'uuid/v1'
 
 const state = {
     todos: [],
-    limit: 200
+    limit: 200,
+    storeTodos: () => {
+        localStorage.setItem('mystore', JSON.stringify(state.todos))
+        state.todos = state.todos.slice(0, state.limit)
+    }
 }
 
 const getters = {
@@ -24,37 +28,34 @@ const actions = {
         commit('removeTodo', id)
     },
     async filterTodos({ commit }, e) {
-        state.todos = JSON.parse(localStorage.getItem('mystore'));
+        state.todos = JSON.parse(localStorage.getItem('mystore'))
         state.limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
         commit('setTodos', state.todos.slice(0, state.limit))
     },
     async updateTodos({ commit }, updatedTodo) {
         commit('updateTodo', updatedTodo)
-    }
+    },
 }
 
 const mutations = {
     setTodos: (state, todos) => (state.todos = todos),
     newTodo: (state, todo) => {
-        state.todos = JSON.parse(localStorage.getItem('mystore'));
-        state.todos = state.todos ? state.todos : [];
-        state.todos.unshift(todo);
-        localStorage.setItem('mystore', JSON.stringify(state.todos));
-        state.todos = state.todos.slice(0, state.limit)
+        state.todos = JSON.parse(localStorage.getItem('mystore'))
+        state.todos = state.todos ? state.todos : []
+        state.todos.unshift(todo)
+        state.storeTodos()
     },
     removeTodo: (state, id) => {
-        state.todos = JSON.parse(localStorage.getItem('mystore'));
-        state.todos = state.todos.filter(todo => todo.id !== id);
-        localStorage.setItem('mystore', JSON.stringify(state.todos));
-        state.todos = state.todos.slice(0, state.limit)
+        state.todos = JSON.parse(localStorage.getItem('mystore'))
+        state.todos = state.todos.filter(todo => todo.id !== id)
+        state.storeTodos()
     },
     updateTodo: (state, updatedTodo) => {
-        const index = state.todos.findIndex(todo => todo.id === updatedTodo.id);
+        const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
         if (index != -1) {
-            state.todos = JSON.parse(localStorage.getItem('mystore'));
-            state.todos.splice(index, 1, updatedTodo);
-            localStorage.setItem('mystore', JSON.stringify(state.todos));
-            state.todos = state.todos.slice(0, state.limit)
+            state.todos = JSON.parse(localStorage.getItem('mystore'))
+            state.todos.splice(index, 1, updatedTodo)
+            state.storeTodos()
         }
     }
 }
