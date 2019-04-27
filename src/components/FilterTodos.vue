@@ -13,7 +13,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { mapActions } from 'vuex'
 
 export default {
