@@ -30,7 +30,8 @@ app.use(allowCrossDomain);
 
 app.get('/api/v1/db', (req, res) => {
   console.log(`GET ${req.route.path}`);
-  res.status(200).send(JSON.stringify(db))
+  res.header('Content-Type', 'application/json')
+    .status(200).send(db)
 })
 
 function collectRequestData(request, callback) {
@@ -57,7 +58,11 @@ app.post('/api/v1/db', (req, res) => {
     });
     req.on('end', () => {
         db = parse(body)
-        // console.log(db)
+        for (o in db) {
+          console.log(JSON.parse(o));
+          // break
+        }
+        //console.log(db)
         res.end();
     });
 }
