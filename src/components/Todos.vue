@@ -39,11 +39,6 @@ export default {
     },
     computed: mapGetters(['allTodos']),
     created() {
-        try {
-            this.todos = JSON.parse(localStorage.getItem('mystore'))
-        } catch(e) {
-            localStorage.removeItem('mystore')
-        }
         this.fetchTodos()
     }
 }
