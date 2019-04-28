@@ -18,19 +18,26 @@ const state = {
         })
             .then( () => console.log('Success!'))
             .catch(error => console.error('Error:', error));
+        state.todos = state.todos.slice(0, state.limit)
+    },
+    loadTodos: () => {
+        if (localStorage.getItem('mystore') === null) {
         fetch(API, { method: 'GET' })
             .then(response => response.json().then(data => {
                 for (let o in data) {
                     let oo = JSON.parse(o)
                     if (typeof oo.todos !== 'undefined') {
-                        console.log(oo.todos)
+                        state.todos = oo.todos
                     }
                     if (typeof oo.limit !== 'undefined') {
-                        console.log(oo.limit)
+                        state.limit = oo.limit
                     }
                 }
+                localStorage.setItem('mystore', JSON.stringify(state.todos))
             }))
-        state.todos = state.todos.slice(0, state.limit)
+        } else {
+            state.todos = JSON.parse(localStorage.getItem('mystore'))
+        }
     }
 }
 
@@ -40,7 +47,7 @@ const getters = {
 
 const actions = {
     async fetchTodos({ commit }) {
-        commit('setTodos', JSON.parse(localStorage.getItem('mystore')))
+        commit('setTodos')
     },
     async addTodo({ commit }, title) {
         commit('newTodo', {
@@ -63,7 +70,7 @@ const actions = {
 }
 
 const mutations = {
-    setTodos: (state, todos) => (state.todos = todos),
+    setTodos: state => state.loadTodos(),
     newTodo: (state, todo) => {
         state.todos = JSON.parse(localStorage.getItem('mystore'))
         state.todos = state.todos ? state.todos : []
