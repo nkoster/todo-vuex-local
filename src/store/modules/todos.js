@@ -1,10 +1,52 @@
 import uuidv1 from 'uuid/v1'
 
+const API = 'http://localhost:5000/api/v1/db'
+/* eslint-disable */
 const state = {
     todos: [],
     limit: 200,
     storeTodos: () => {
         localStorage.setItem('mystore', JSON.stringify(state.todos))
+        fetch(API, {
+            method: 'POST',
+            body: JSON.stringify(state),
+            // body: state,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+            .then( () => console.log('Success!'))
+            .catch(error => console.error('Error:', error));
+        fetch(API, {
+            method: 'GET',
+            // headers: {
+            //   'Content-Type': 'application/json'
+            // }
+        })
+            .then(response => response.text().then(data => {
+                // const {} = data
+                console.log(data)
+                // console.log(Object.keys(data)[0])
+            }))
+
+        // fetch('http://localhost:5000/api/v1/db', {
+        //     method: 'POST',
+        //     mode: "cors", // no-cors, cors, *same-origin
+        //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        //     credentials: "same-origin", // include, *same-origin, omit
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         // "Content-Type": "application/x-www-form-urlencoded",
+        //     },
+        //     redirect: "follow", // manual, *follow, error
+        //     referrer: "no-referrer", // no-referrer, *client
+        //     body: JSON.stringify( state )
+        // })
+        // .then(response => {
+        //     return response.todos
+        //     // show stuff
+        // })
+        // .catch()
         state.todos = state.todos.slice(0, state.limit)
     }
 }
