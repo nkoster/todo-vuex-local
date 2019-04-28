@@ -23,9 +23,11 @@ const state = {
             //   'Content-Type': 'application/json'
             // }
         })
-            .then(response => response.text().then(data => {
+            .then(response => response.json().then(data => {
                 // const {} = data
-                console.log(data)
+                for (let o in data) {
+                    console.log(JSON.parse(o))
+                }
                 // console.log(Object.keys(data)[0])
             }))
 
