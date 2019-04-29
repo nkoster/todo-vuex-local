@@ -10,7 +10,7 @@ I've replaced the JSON fake API for local storage instead, and sync that to a re
 
 My goal is to keep stuff as simple as posible, perhaps even too simple, be carefull.
 
-These are my steps to get the thing running:
+These are the steps to get the thing running from within my linux terminal:
 
 ```
 sudo npm i -g @vue/cli
