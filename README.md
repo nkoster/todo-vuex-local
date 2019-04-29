@@ -23,3 +23,5 @@ vue ui
 
 Check the UI page, import the ```todo-vuex-local``` directory as a project, and start the "serve task" for the project.
 In the "output" display, you'll see the localhost URL.
+
+```app.js``` is the "remote storage server", running at localhost port 5000.
