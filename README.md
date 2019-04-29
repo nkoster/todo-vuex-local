@@ -1,6 +1,6 @@
 # todo-vuex-local
 
-Todo skeleton, with Vuex state management, and local storage, and sync to remote storage.
+Todo skeleton, with Vuex state management, local storage, and sync to remote storage.
 
 This skeleton is shamelessly inspired by Brads' Vuex [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) crash course.
 
