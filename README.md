@@ -1,6 +1,6 @@
 # todo-vuex-local
 
-Todo skeleton, with vuex and local storage, and sync to remote store.
+Todo skeleton, with Vuex state management, local storage, and sync to remote storage.
 
 This skeleton is shamelessly inspired by Brads' Vuex [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) crash course.
 
@@ -22,6 +22,6 @@ vue ui
 ```
 
 Check the UI page, import the ```todo-vuex-local``` directory as a project, and start the "serve task" for the project.
-In the "output" display, you'll see the localhost URL.
+In the _output_ display, you'll see the localhost URL.
 
 ```app.js``` is the "remote storage server", running at localhost port 5000.
