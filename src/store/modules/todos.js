@@ -38,6 +38,7 @@ const state = {
         } else {
             state.todos = JSON.parse(localStorage.getItem('mystore'))
         }
+        state.todos = state.todos.slice(0, state.limit)
     }
 }
 
