@@ -8,7 +8,7 @@ Original code: https://github.com/bradtraversy/vuex_todo_manager
 
 I've replaced the JSON fake API for local storage instead, and sync that to a remote storage.
 
-My goal is to keep stuff as simple as posible.
+My goal is to keep stuff as simple as posible, perhaps even too simle, be carefull.
 
 These are my steps to get the thing running:
 
