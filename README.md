@@ -2,11 +2,11 @@
 
 Todo skeleton, with Vuex state management, local storage, and sync to remote storage.
 
-This skeleton is shamelessly inspired on Brads' Vuex [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) crash course.
+This skeleton is shamelessly inspired on Brads' (👍👍) Vuex [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) crash course.
 
 Original code: https://github.com/bradtraversy/vuex_todo_manager
 
-I've replaced the JSON fake API for local storage instead, and sync that to a remote storage.
+I've replaced the [JSON fake API](https://jsonplaceholder.typicode.com/) for local storage instead, and sync that to a remote storage.
 
 My goal is to keep stuff as simple as posible, perhaps even too simple, be carefull.
 
