@@ -2,7 +2,7 @@
 
 Todo skeleton, with vuex and local storage, and sync to remote store.
 
-This skeleton is shamelessly inspired by Brads' [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) video.
+This skeleton is shamelessly inspired by Brads' Vuex [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) crash course.
 
 Original code: https://github.com/bradtraversy/vuex_todo_manager
 
