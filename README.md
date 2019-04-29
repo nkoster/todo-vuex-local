@@ -2,7 +2,7 @@
 
 Todo skeleton, with vuex and local storage, and sync to remote store.
 
-This skeleton is shamelessly inspired by mister Brads' youtube video https://www.youtube.com/watch?v=5lVQgZzLMHc
+This skeleton is shamelessly inspired by Brads' [youtube](https://www.youtube.com/watch?v=5lVQgZzLMHc) video.
 
 Original code: https://github.com/bradtraversy/vuex_todo_manager
 
@@ -21,5 +21,5 @@ npm i
 vue ui
 ```
 
-Check the UI page, import the ```todo-vuex-local``` directory as a project, and start the "serve task' for the project.
+Check the UI page, import the ```todo-vuex-local``` directory as a project, and start the "serve task" for the project.
 In the "output" display, you'll see the localhost URL.
