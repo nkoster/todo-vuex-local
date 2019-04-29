@@ -3,43 +3,40 @@ const
   express = require('express'),
   { parse } = require('querystring'),
   app = express(),
-  log = false
+  log = true
 
 let db
 
-let allowCrossDomain = function(req, res, next) {
+app.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
   res.header('Access-Control-Allow-Headers', 'Content-Type')
   next()
-}
-app.use(allowCrossDomain)
+})
 
-app.get('/api/v1/db', (req, res) => {
-  console.log(`GET ${req.route.path}`)
-  res.header('Content-Type', 'application/json')
-    .status(200).send(db)
+app.get('/api/v1/db', (_, res) => {
+  if (log) console.log('GET')
+  res.header('Content-Type', 'application/json').status(200).send(db)
 })
 
 app.post('/api/v1/db', (req, res) => {
+  if (log) console.log('POST')
   if (req.method === 'POST') {
-    let body = '';
+    let body = ''
     req.on('data', chunk => {
-        body += chunk.toString();
-    });
+        body += chunk.toString()
+    })
     req.on('end', () => {
         db = parse(body)
         if (log) {
           for (o in db) {
-            console.log(JSON.parse(o));
+            console.log(JSON.parse(o))
+            console.log('db updated')
           }
         }
-        console.log('db updated')
-        res.end();
-    });
+        res.end()
+    })
 }
 })
 
-app.listen(5000, () => {
-  console.log('server running :5000')
-})
+app.listen(5000, () => console.log('server running :5000'))
