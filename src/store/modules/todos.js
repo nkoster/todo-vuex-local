@@ -8,7 +8,7 @@ const state = {
     todos: [],
     limit: 200,
     storeTodos: () => {
-        localStorage.setItem('mystore', JSON.stringify(state.todos))
+        localStorage.setItem('myStorage', JSON.stringify(state.todos))
         fetch(API, {
             method: 'POST',
             body: JSON.stringify(state),
@@ -21,23 +21,24 @@ const state = {
         state.todos = state.todos.slice(0, state.limit)
     },
     loadTodos: () => {
-        if (localStorage.getItem('mystore') === null) {
-        fetch(API, { method: 'GET' })
-            .then(response => response.json().then(data => {
-                for (let o in data) {
-                    let oo = JSON.parse(o)
-                    if (typeof oo.todos !== 'undefined') {
-                        state.todos = oo.todos
+        if (localStorage.getItem('myStorage') === null) {
+            localStorage.setItem('myStorage', JSON.stringify(state.todos))
+            fetch(API, { method: 'GET' })
+                .then(response => response.json().then(data => {
+                    for (let o in data) {
+                        let oo = JSON.parse(o)
+                        if (typeof oo.todos !== 'undefined') {
+                            state.todos = oo.todos
+                        }
+                        if (typeof oo.limit !== 'undefined') {
+                            state.limit = oo.limit
+                        }
                     }
-                    if (typeof oo.limit !== 'undefined') {
-                        state.limit = oo.limit
-                    }
-                }
-                localStorage.setItem('mystore', JSON.stringify(state.todos))
-            }))
-            .catch(err => console.error(err))
+                    localStorage.setItem('myStorage', JSON.stringify(state.todos))
+                }))
+                .catch(err => console.error(err))
         } else {
-            state.todos = JSON.parse(localStorage.getItem('mystore'))
+            state.todos = JSON.parse(localStorage.getItem('myStorage'))
         }
         state.todos = state.todos.slice(0, state.limit)
     }
@@ -62,7 +63,7 @@ const actions = {
         commit('removeTodo', id)
     },
     async filterTodos({ commit }, e) {
-        state.todos = JSON.parse(localStorage.getItem('mystore'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage'))
         state.limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
         commit('setTodos', state.todos.slice(0, state.limit))
     },
@@ -74,20 +75,20 @@ const actions = {
 const mutations = {
     setTodos: state => state.loadTodos(),
     newTodo: (state, todo) => {
-        state.todos = JSON.parse(localStorage.getItem('mystore'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage'))
         state.todos = state.todos ? state.todos : []
         state.todos.unshift(todo)
         state.storeTodos()
     },
     removeTodo: (state, id) => {
-        state.todos = JSON.parse(localStorage.getItem('mystore'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage'))
         state.todos = state.todos.filter(todo => todo.id !== id)
         state.storeTodos()
     },
     updateTodo: (state, updatedTodo) => {
         const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
         if (index != -1) {
-            state.todos = JSON.parse(localStorage.getItem('mystore'))
+            state.todos = JSON.parse(localStorage.getItem('myStorage'))
             state.todos.splice(index, 1, updatedTodo)
             state.storeTodos()
         }
