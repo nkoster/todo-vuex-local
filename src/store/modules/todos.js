@@ -16,8 +16,8 @@ const state = {
               'Content-Type': 'application/json'
             }
         })
-            .then( () => console.log('Success!'))
-            .catch(error => console.error('Error:', error));
+            .then(() => console.log('Success!'))
+            .catch(err => console.error('Error:', err));
         state.todos = state.todos.slice(0, state.limit)
     },
     loadTodos: () => {
@@ -35,6 +35,7 @@ const state = {
                 }
                 localStorage.setItem('mystore', JSON.stringify(state.todos))
             }))
+            .catch(err => console.error(err))
         } else {
             state.todos = JSON.parse(localStorage.getItem('mystore'))
         }
