@@ -24,7 +24,7 @@ export default {
         ...mapActions(['addTodo']),
         onSubmit(e) {
             e.preventDefault()
-            this.addTodo(this.title)
+            if (this.title !== '') this.addTodo(this.title)
             this.title = ''
         }
     }
