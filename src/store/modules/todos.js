@@ -75,7 +75,7 @@ const actions = {
         commit('removeTodo', id)
     },
     async filterTodos({ commit }, e) {
-        state.todos = JSON.parse(localStorage.getItem('myStorage').todos)
+        state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
         state.limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
         commit('setTodos', state.todos.slice(0, state.limit))
     },
