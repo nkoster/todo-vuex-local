@@ -4,43 +4,55 @@ const API = 'http://localhost:5000/api/v1/db'
 
 /* eslint-disable */
 
+// todo: create encrypted blob with id on remote
+
+const stateId = 'apekop'
+
 const state = {
     todos: [],
     limit: 200,
     storeTodos: () => {
-        localStorage.setItem('myStorage', JSON.stringify(state.todos))
+        localStorage.setItem('myStorage', JSON.stringify({
+            stateId,
+            todos: state.todos
+        }))
         fetch(API, {
             method: 'POST',
-            body: JSON.stringify(state),
+            body: JSON.stringify({
+                stateId: stateId,
+                todos: state.todos
+            }),
             headers: {
               'Content-Type': 'application/json'
             }
         })
             .then(() => console.log('Success!'))
             .catch(err => console.error('Error:', err));
-        state.todos = state.todos.slice(0, state.limit)
+        if (state.todos) state.todos = state.todos.slice(0, state.limit)
     },
     loadTodos: () => {
         if (localStorage.getItem('myStorage') === null) {
-            localStorage.setItem('myStorage', JSON.stringify(state.todos))
+            console.log('Trying to fetch from remote...')
             fetch(API, { method: 'GET' })
                 .then(response => response.json().then(data => {
-                    for (let o in data) {
-                        let oo = JSON.parse(o)
-                        if (typeof oo.todos !== 'undefined') {
-                            state.todos = oo.todos
-                        }
-                        if (typeof oo.limit !== 'undefined') {
-                            state.limit = oo.limit
-                        }
+                    console.log(data)
+                    if (data.todos) {
+                        state.todos = data.todos
+                    } else {
+                        state.todos = []
                     }
-                    localStorage.setItem('myStorage', JSON.stringify(state.todos))
+                    localStorage.setItem('myStorage', JSON.stringify({
+                        stateId: stateId,
+                        todos: state.todos
+                    }))
                 }))
                 .catch(err => console.error(err))
         } else {
-            state.todos = JSON.parse(localStorage.getItem('myStorage'))
+            state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
+            state.stateId = JSON.parse(localStorage.getItem('myStorage')).stateId
+            console.log(state.stateId)
         }
-        state.todos = state.todos.slice(0, state.limit)
+        if (state.todos) state.todos = state.todos.slice(0, state.limit)
     }
 }
 
@@ -63,7 +75,7 @@ const actions = {
         commit('removeTodo', id)
     },
     async filterTodos({ commit }, e) {
-        state.todos = JSON.parse(localStorage.getItem('myStorage'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage').todos)
         state.limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
         commit('setTodos', state.todos.slice(0, state.limit))
     },
@@ -75,20 +87,20 @@ const actions = {
 const mutations = {
     setTodos: state => state.loadTodos(),
     newTodo: (state, todo) => {
-        state.todos = JSON.parse(localStorage.getItem('myStorage'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
         state.todos = state.todos ? state.todos : []
         state.todos.unshift(todo)
         state.storeTodos()
     },
     removeTodo: (state, id) => {
-        state.todos = JSON.parse(localStorage.getItem('myStorage'))
+        state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
         state.todos = state.todos.filter(todo => todo.id !== id)
         state.storeTodos()
     },
     updateTodo: (state, updatedTodo) => {
         const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
         if (index != -1) {
-            state.todos = JSON.parse(localStorage.getItem('myStorage'))
+            state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
             state.todos.splice(index, 1, updatedTodo)
             state.storeTodos()
         }
