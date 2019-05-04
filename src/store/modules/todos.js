@@ -6,7 +6,7 @@ const API = 'http://localhost:5000/api/v1/db'
 
 // todo: create encrypted blob with id on remote
 
-const stateId = 'apekop'
+const stateId = 'blaa'
 
 const state = {
     todos: [],
