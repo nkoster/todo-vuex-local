@@ -41,10 +41,9 @@ app.post('/api/v1/db', (req, res) => {
     req.on('end', () => {
         const read = parse(body)
         if (read) {
-          let newDb = {}
-          for (let o in read) newDb = JSON.parse(o)
-          db2[newDb.stateId] = newDb.todos
-          // db2 = newDb
+          let newObject = {}
+          for (let o in read) newObject = JSON.parse(o)
+          db2[newObject.stateId] = newObject.todos
         }
         if (log) console.log(db2)
         res.end()
