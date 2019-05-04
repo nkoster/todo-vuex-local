@@ -14,14 +14,16 @@ app.use((_, res, next) => {
   next()
 })
 
-app.all('/', (req) => {
+app.all('/*', (req, res, next) => {
   if (log) console.log(req.url)
+  if (req.url === '/') app.use(express.static('dist'))
   next()
 })
 
-app.get('/api/v1/db', (req, res) => {
+app.get('/id/:stateId', (req, res) => {
   if (log) {
     console.log('GET')
+    console.log(req.params)
     console.log(db2[Object.keys(db2)[0]])
   }
   if (db2[Object.keys(db2)[0]]) {
@@ -35,8 +37,11 @@ app.get('/api/v1/db', (req, res) => {
   }
 })
 
-app.post('/api/v1/db', (req, res) => {
-  if (log) console.log('POST')
+app.post('/id/:stateId', (req, res) => {
+  if (log) {
+    console.log('POST')
+    console.log(req.params)
+  }
   if (req.method === 'POST') {
     let body = ''
     req.on('data', chunk => {
