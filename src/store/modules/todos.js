@@ -1,12 +1,12 @@
 import uuidv1 from 'uuid/v1'
 
-const API = 'http://localhost:5000/api/v1/db'
+const API = 'http://localhost:5000/'
 
 /* eslint-disable */
 
 // todo: create encrypted blob with id on remote
 
-const stateId = 'blaa'
+let stateId = 'apekop'
 
 const state = {
     todos: [],
@@ -16,7 +16,7 @@ const state = {
             stateId,
             todos: state.todos
         }))
-        fetch(API, {
+        fetch(API + 'id/' + stateId , {
             method: 'POST',
             body: JSON.stringify({
                 stateId: stateId,
@@ -33,7 +33,7 @@ const state = {
     loadTodos: () => {
         if (localStorage.getItem('myStorage') === null) {
             console.log('Trying to fetch from remote...')
-            fetch(API, { method: 'GET' })
+            fetch(API + 'id/' + stateId, { method: 'GET' })
                 .then(response => response.json().then(data => {
                     console.log(data)
                     if (data.todos) {
@@ -49,6 +49,7 @@ const state = {
                 .catch(err => console.error(err))
         } else {
             state.todos = JSON.parse(localStorage.getItem('myStorage')).todos
+            stateId = JSON.parse(localStorage.getItem('myStorage')).stateId
             state.stateId = JSON.parse(localStorage.getItem('myStorage')).stateId
             console.log(state.stateId)
         }
