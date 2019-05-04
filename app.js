@@ -28,6 +28,10 @@ app.get('/api/v1/db', (req, res) => {
     res.header('Content-Type', 'application/json').status(200).send({
       todos: db2[Object.keys(db2)[0]]
     })
+  } else {
+    res.header('Content-Type', 'application/json').status(200).send({
+      todos: []
+    })
   }
 })
 
