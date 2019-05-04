@@ -27,7 +27,7 @@ const state = {
             }
         })
             .then(() => console.log('Success!'))
-            .catch(err => console.error('Error:', err));
+            .catch(err => console.error('Error:', err))
         if (state.todos) state.todos = state.todos.slice(0, state.limit)
     },
     loadTodos: () => {
