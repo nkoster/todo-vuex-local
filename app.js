@@ -24,9 +24,11 @@ app.get('/api/v1/db', (req, res) => {
     console.log('GET')
     console.log(db2[Object.keys(db2)[0]])
   }
-  res.header('Content-Type', 'application/json').status(200).send({
-    todos: db2[Object.keys(db2)[0]]
-  })
+  if (db2[Object.keys(db2)[0]]) {
+    res.header('Content-Type', 'application/json').status(200).send({
+      todos: db2[Object.keys(db2)[0]]
+    })
+  }
 })
 
 app.post('/api/v1/db', (req, res) => {
@@ -39,10 +41,10 @@ app.post('/api/v1/db', (req, res) => {
     req.on('end', () => {
         const read = parse(body)
         if (read) {
-          for (let o in read) db2 = JSON.parse(o)
-          const newDb = {}
-          newDb[db2.stateId] = db2.todos
-          db2 = newDb
+          let newDb = {}
+          for (let o in read) newDb = JSON.parse(o)
+          db2[newDb.stateId] = newDb.todos
+          // db2 = newDb
         }
         if (log) console.log(db2)
         res.end()
