@@ -5,10 +5,7 @@ const
   app = express(),
   log = true
 
-let db = {
-  stateId: 0,
-  todos: []
-}
+let db2 = {}
 
 app.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -17,23 +14,18 @@ app.use((_, res, next) => {
   next()
 })
 
-app.get('/api/v1/db', (_, res) => {
+app.all('/', (req) => {
+  if (log) console.log(req.url)
+  next()
+})
+
+app.get('/api/v1/db', (req, res) => {
   if (log) {
     console.log('GET')
-    if (log) {
-      for (let o in db) {
-        try {
-          console.log(JSON.parse(o))
-          db = JSON.parse(o)
-        }
-        catch(err) {
-          console.log(err)
-        }
-      }
-    }
+    console.log(db2[Object.keys(db2)[0]])
   }
-  if (db.todos) res.header('Content-Type', 'application/json').status(200).send({
-    todos: db.todos
+  res.header('Content-Type', 'application/json').status(200).send({
+    todos: db2[Object.keys(db2)[0]]
   })
 })
 
@@ -46,13 +38,13 @@ app.post('/api/v1/db', (req, res) => {
     })
     req.on('end', () => {
         const read = parse(body)
-        if (read) db = read
-        if (log) {
-          for (let o in db) {
-            console.log(JSON.parse(o))
-            console.log('db updated')
-          }
+        if (read) {
+          for (let o in read) db2 = JSON.parse(o)
+          const newDb = {}
+          newDb[db2.stateId] = db2.todos
+          db2 = newDb
         }
+        if (log) console.log(db2)
         res.end()
     })
 }
